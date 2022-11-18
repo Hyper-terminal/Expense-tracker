@@ -1,5 +1,6 @@
-import ExpenseForm from "./components/Expenses/ExpenseForm";
 import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/Expenses/NewExpense/NewExpense";
+import React from "react";
 
 const App = () => {
     const expenses = [
@@ -24,11 +25,10 @@ const App = () => {
     ];
 
     return (
-        <>
-            <h2>Let's get started!</h2>
-            <ExpenseForm />
+        <React.StrictMode>
+            <NewExpense />
             <Expenses item={expenses} />
-        </>
+        </React.StrictMode>
     );
 };
 
