@@ -1,3 +1,4 @@
+import ExpenseForm from "./components/Expenses/ExpenseForm";
 import Expenses from "./components/Expenses/Expenses";
 
 const App = () => {
@@ -25,9 +26,10 @@ const App = () => {
     return (
         <>
             <h2>Let's get started!</h2>
+            <ExpenseForm />
             <Expenses item={expenses} />
         </>
     );
-}
+};
 
 export default App;
