@@ -1,29 +1,26 @@
 import ExpenseDate from "./ExpenseDate";
 import Card from "../UI/Card";
 import "./ExpenseItem.css";
+import { useState } from "react";
 
 const ExpenseItem = (props) => {
-  const clickHandler = (e) => {
-    const parentNode = e.target.parentNode.parentNode;
+    const [amount, setAmount] = useState(props.amount);
 
-    const nodeToBeDeleted = e.target.parentNode;
+    const clickHandler = (e) => {
+        setAmount(100);
+    };
 
-    parentNode.remove(nodeToBeDeleted);
-
-    console.log("Deleted");
-  };
-
-  return (
-    <Card className="expense-item">
-      <ExpenseDate date={props.date} />
-      <div className="expense-item__description">
-        <h2>{props.title}</h2>
-        <p>{props.locationOfExpenditure}</p>
-        <div className="expense-item__price">${props.amount}</div>
-        <button onClick={clickHandler}>X</button>
-      </div>
-    </Card>
-  );
+    return (
+        <Card className="expense-item">
+            <ExpenseDate date={props.date} />
+            <div className="expense-item__description">
+                <h2>{props.title}</h2>
+                <p>{props.locationOfExpenditure}</p>
+                <div className="expense-item__price">${amount}</div>
+                <button onClick={clickHandler}>update</button>
+            </div>
+        </Card>
+    );
 };
 
 export default ExpenseItem;
