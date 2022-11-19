@@ -1,52 +1,38 @@
 import { useState } from "react";
 import "./ExpenseForm.css";
 
-const ExpenseForm = () => {
-    const [userInputs, setUserInputs] = useState({
-        enteredAmount: "",
-        enteredTitle: "",
-        enteredDate: "",
-    });
+const ExpenseForm = (props) => {
+    const [enteredTitle, setEnteredTitle] = useState("");
+    const [enteredAmount, setEnteredAmount] = useState("");
+    const [enteredDate, setEnteredDate] = useState("");
 
     const titleChangeHandler = (event) => {
-        // useState is asynchronous function that's we're using callback to make sure we always get latest previous state values
-        setUserInputs((prevStateValues) => {
-            return {
-                ...prevStateValues,
-                enteredTitle: event.target.value,
-            };
-        });
+        setEnteredTitle(event.target.value);
     };
 
     const amountChangeHandler = (event) => {
-        setUserInputs((prevStateValues) => {
-            return {
-                ...prevStateValues,
-                enteredAmount: event.target.value,
-            };
-        });
+        setEnteredAmount(event.target.value);
     };
 
     const dateChangeHandler = (event) => {
-        // setEnteredDate(event.target.value);
-        setUserInputs((prevStateValues) => {
-            return {
-                ...prevStateValues,
-                enteredDate: event.target.value,
-            };
-        });
+        setEnteredDate(event.target.value);
     };
 
     const formSubmitHandler = (event) => {
         event.preventDefault();
 
-        const {
-            title: { value: title },
-            amount: { value: amount },
-            date: { value: date },
-        } = event.target;
+        const expenseData = {
+            title: enteredTitle,
+            amount: enteredAmount,
+            date: new Date(enteredDate),
+        };
 
-        console.log(`Title: ${title}, Amount: ${amount}, Date: ${date}`);
+        props.onSaveExpenseData(expenseData);
+
+        // clearing input fields now using two-way binding
+        setEnteredAmount("");
+        setEnteredDate("");
+        setEnteredTitle("");
     };
 
     return (
@@ -59,6 +45,7 @@ const ExpenseForm = () => {
                         name="title"
                         placeholder="Enter title here..."
                         onChange={titleChangeHandler}
+                        value={enteredTitle}
                     />
                 </div>
                 <div className="new-expense__control">
@@ -68,6 +55,7 @@ const ExpenseForm = () => {
                         name="amount"
                         placeholder="Enter amount here..."
                         min="0"
+                        value={enteredAmount}
                         onChange={amountChangeHandler}
                     />
                 </div>
@@ -79,6 +67,7 @@ const ExpenseForm = () => {
                         name="date"
                         min="2019-01-01"
                         max="2022-12-31"
+                        value={enteredDate}
                         onChange={dateChangeHandler}
                     />
                 </div>

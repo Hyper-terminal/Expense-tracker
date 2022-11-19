@@ -24,9 +24,13 @@ const App = () => {
         },
     ];
 
+    const addExpenseHandler = (expense) => {
+        console.log(expense);
+    };
+
     return (
         <React.StrictMode>
-            <NewExpense />
+            <NewExpense onAddExpense={addExpenseHandler} />
             <Expenses item={expenses} />
         </React.StrictMode>
     );
