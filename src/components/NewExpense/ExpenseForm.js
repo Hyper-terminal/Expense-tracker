@@ -2,26 +2,55 @@ import { useState } from "react";
 import "./ExpenseForm.css";
 
 const ExpenseForm = () => {
-    const [enteredTitle, setEnteredTitle] = useState("");
-
-    const [enteredAmount, setEnteredAmount] = useState('');
-
-    const [enteredDate, setEnteredDate] = useState('');
+    const [userInputs, setUserInputs] = useState({
+        enteredAmount: "",
+        enteredTitle: "",
+        enteredDate: "",
+    });
 
     const titleChangeHandler = (event) => {
-        setEnteredTitle(event.target.value);
+        // useState is asynchronous function that's we're using callback to make sure we always get latest previous state values
+        setUserInputs((prevStateValues) => {
+            return {
+                ...prevStateValues,
+                enteredTitle: event.target.value,
+            };
+        });
     };
 
     const amountChangeHandler = (event) => {
-        setEnteredAmount(event.target.value);
+        setUserInputs((prevStateValues) => {
+            return {
+                ...prevStateValues,
+                enteredAmount: event.target.value,
+            };
+        });
     };
 
     const dateChangeHandler = (event) => {
-        setEnteredDate(event.target.value);
+        // setEnteredDate(event.target.value);
+        setUserInputs((prevStateValues) => {
+            return {
+                ...prevStateValues,
+                enteredDate: event.target.value,
+            };
+        });
+    };
+
+    const formSubmitHandler = (event) => {
+        event.preventDefault();
+
+        const {
+            title: { value: title },
+            amount: { value: amount },
+            date: { value: date },
+        } = event.target;
+
+        console.log(`Title: ${title}, Amount: ${amount}, Date: ${date}`);
     };
 
     return (
-        <form>
+        <form onSubmit={formSubmitHandler}>
             <div className="new-expense__controls">
                 <div className="new-expense__control">
                     <label>Title</label>
@@ -30,7 +59,6 @@ const ExpenseForm = () => {
                         name="title"
                         placeholder="Enter title here..."
                         onChange={titleChangeHandler}
-                        value={enteredTitle}
                     />
                 </div>
                 <div className="new-expense__control">
@@ -39,8 +67,8 @@ const ExpenseForm = () => {
                         type="number"
                         name="amount"
                         placeholder="Enter amount here..."
+                        min="0"
                         onChange={amountChangeHandler}
-                        value={enteredAmount}
                     />
                 </div>
 
