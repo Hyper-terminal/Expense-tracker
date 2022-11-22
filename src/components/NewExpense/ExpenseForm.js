@@ -33,6 +33,9 @@ const ExpenseForm = (props) => {
         setEnteredAmount("");
         setEnteredDate("");
         setEnteredTitle("");
+
+        // close our form and show add new button instead
+        props.formToggle();
     };
 
     return (
@@ -72,7 +75,10 @@ const ExpenseForm = (props) => {
                     />
                 </div>
             </div>
+
             <div className="new-expense__actions">
+                <button onClick={props.formToggle}>Cancel</button>
+
                 <button type="submit">Add Expense</button>
             </div>
         </form>
